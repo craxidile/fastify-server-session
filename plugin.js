@@ -62,6 +62,7 @@ function plugin (fastify, options, pluginRegistrationDone) {
   })
 
   fastify.addHook('onSend', function (req, reply, payload, hookFinished) {
+    const self = this
     if (req.session[syms.kSessionModified] === false) {
       return hookFinished()
     }
@@ -84,7 +85,7 @@ function plugin (fastify, options, pluginRegistrationDone) {
         return hookFinished(Error('missing session id'))
       }
 
-      this.cache.set(sessionId, req.session, opts.sessionMaxAge, (err) => {
+      self.cache.set(sessionId, req.session, opts.sessionMaxAge, (err) => {
         if (err) {
           req.log.trace('error saving session: %s', err.message)
           return hookFinished(err)
