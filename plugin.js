@@ -31,7 +31,7 @@ function plugin (fastify, options, pluginRegistrationDone) {
   }
 
   fastify.decorateRequest('session', getSession())
-  fastify.addHook('onRequest', function (req, reply, hookFinished) {
+  fastify.addHook('preHandler', function (req, reply, hookFinished) {
     if (!req.cookies[opts.sessionCookieName]) {
       req.session = getSession()
       return hookFinished()
