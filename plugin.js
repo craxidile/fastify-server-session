@@ -95,7 +95,7 @@ function plugin (fastify, options, pluginRegistrationDone) {
           expires: (!cookieExiresMs)
             ? undefined
             : new Date(Date.now() + cookieExiresMs),
-          secure: false
+          secure: true
         })
         const signedId = sign(sessionId, opts.secretKey)
         reply.setCookie(opts.sessionCookieName, signedId, cookieOpts)
